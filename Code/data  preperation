@@ -1,0 +1,24 @@
+# 1. Separate features (X), target (y), and weights
+X = df.drop(['Label', 'Weight'], axis=1)
+y = (df['Label'] == 's').astype(int)
+
+
+  missing=df.isna().sum()
+##checks for missing values
+
+
+  if missing.sum() > 0:
+    df = df.fillna(df.median())
+
+
+
+  ## Handle missing or zero-filled values (-999.0)
+# Imputation: Replace -999.0 with the column mean.
+for col in X.columns:
+    if (X[col] == -999.0).any():
+        col_mean = X.loc[X[col] != -999.0, col].mean()
+        X[col].replace(-999.0, col_mean, inplace=True)
+
+print("Missing values (-999.0) imputed with column mean.")
+
+  df = df.drop_duplicates()
