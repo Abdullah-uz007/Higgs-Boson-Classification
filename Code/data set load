@@ -1,2 +1,22 @@
 from google.colab import files
 files.upload()  # Upload kaggle.json
+
+!mkdir -p ~/.kaggle
+!mv "kaggle .json" ~/.kaggle/kaggle.json
+!chmod 600 ~/.kaggle/kaggle.json
+
+!kaggle competitions download -c higgs-boson
+!unzip -o higgs-boson.zip
+
+
+## Download the Higgs Boson dataset
+!kaggle competitions download -c higgs-boson
+
+# 2. Unzip the training dataset
+!unzip -o training.zip
+
+# 3. Load and display the first few rows
+import pandas as pd
+
+df = pd.read_csv('training.csv') # Changed to training.csv
+df.head()
