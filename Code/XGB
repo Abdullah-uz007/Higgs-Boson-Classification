@@ -1,0 +1,33 @@
+# Train XGBoost Model
+try:
+    import xgboost as xgb
+except ImportError:
+    print("XGBoost not installed. Skipping baseline comparison.")
+
+# Initialize and train the XGBoost model
+xgb_model = xgb.XGBClassifier(
+    objective='binary:logistic',
+    use_label_encoder=False,
+    eval_metric='logloss',
+    n_estimators=100,
+    random_state=42
+)
+xgb_model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred_proba_xgb = xgb_model.predict_proba(X_test)[:, 1]
+y_pred_xgb = xgb_model.predict(X_test)
+
+# Report performance metrics
+acc_xgb = accuracy_score(y_test, y_pred_xgb)
+prec_xgb = precision_score(y_test, y_pred_xgb)
+rec_xgb = recall_score(y_test, y_pred_xgb)
+f1_xgb = f1_score(y_test, y_pred_xgb)
+roc_auc_xgb = roc_auc_score(y_test, y_pred_proba_xgb)
+
+print("--- XGBoost Model Metrics (Test Set) ---")
+print(f"Accuracy : {acc_xgb:.4f}")
+print(f"Precision: {prec_xgb:.4f}")
+print(f"Recall   : {rec_xgb:.4f}")
+print(f"F1-Score : {f1_xgb:.4f}")
+print(f"ROC AUC  : {roc_auc_xgb:.4f}")
