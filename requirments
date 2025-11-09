@@ -1,0 +1,40 @@
+## 📌 Project Requirements / Goals
+
+This project was part of **Deep Learning | DS & AI Cohort 13**. The objective was to **design, train, and evaluate a deep learning model using tabular data**, applying learned techniques in model architecture, optimization, and regularization to solve a real-world binary classification task.
+
+### Dataset
+- **Type:** Tabular — Higgs Boson Signal Classification  
+- **Source:** [Kaggle Higgs Boson Challenge](https://www.kaggle.com/c/higgs-boson)  
+- **Task:** Predict whether a particle collision event corresponds to a Higgs boson signal or background noise  
+- **Features:** 30 anonymized real-valued features derived from particle physics measurements  
+
+### Tasks to Perform
+1. **Data Preparation**
+   - Normalize continuous features  
+   - Handle any missing or zero-filled values  
+   - Split dataset into **train/validation/test** (e.g., 70/15/15)  
+
+2. **Model Building**
+   - Define architecture:
+     - Hidden layers, units, activation functions  
+     - Output layer with **sigmoid activation**  
+     - Loss function: **binary crossentropy**  
+   - Set **optimizer, learning rate, and epochs**  
+   - Apply regularization techniques (**Dropout, BatchNorm**)  
+   - Use callbacks: **EarlyStopping, ReduceLROnPlateau**  
+   - Experiment with deeper architectures or alternative optimizers (**RMSprop, AdamW**)  
+
+3. **Model Evaluation**
+   - Plot training & validation **accuracy/loss curves**  
+   - Report performance using:
+     - Accuracy  
+     - Precision, Recall, F1-Score  
+     - Confusion Matrix and ROC-AUC curve  
+   - Compare performance with a **tree-based baseline** (e.g., XGBoost)  
+
+4. **Reflection**
+   - Answer questions in the notebook:
+     - How did model depth and activation affect performance?  
+     - What helped mitigate overfitting?  
+     - How did learning rate and optimizer affect convergence?  
+     - What would you improve with more time or compute?  
