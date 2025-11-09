@@ -1,0 +1,76 @@
+from tensorflow.keras.layers import GaussianNoise # Import GaussianNoise
+
+def build_baseline_model(input_shape, learning_rate):
+    """Defines a simple DL model with crucial fixes for stability."""
+    model = models.Sequential([
+        # Input Layer
+            GaussianNoise(0.1, input_shape=(X_train.shape[1],)),
+
+        # 1st Hidden Layer with L2 Regularization
+        layers.Dense(128, kernel_regularizer=l2(0.001)),
+        layers.BatchNormalization(), # Added for stability
+        layers.ReLU(),
+        layers.Dropout(0.3), # Added to mitigate overfitting
+
+        # 2nd Hidden Layer
+        layers.Dense(64, kernel_regularizer=l2(0.001)),
+        layers.BatchNormalization(),
+        layers.ReLU(),
+        layers.Dropout(0.3),
+
+        # Output Layer (Binary Classification)
+        layers.Dense(1, activation='sigmoid')
+    ])
+
+    # Optimizer with corrected low learning rate
+    optimizer = optimizers.Adam(learning_rate=learning_rate)
+
+    model.compile(
+        optimizer=optimizer,
+        loss='binary_crossentropy',
+        metrics=['accuracy']
+
+
+# Model Parameters
+INPUT_SHAPE = X_train_scaled.shape[1]
+BASE_LEARNING_RATE = 1e-4
+EPOCHS = 150
+BATCH_SIZE = 512
+
+
+# Callbacks
+early_stopping = callbacks.EarlyStopping(
+    monitor='val_loss',
+    patience=10,
+    restore_best_weights=True
+)
+reduce_lr = callbacks.ReduceLROnPlateau(
+    monitor='val_loss',
+    factor=0.5,
+    patience=5,
+    min_lr=1e-7
+)
+
+
+model = build_baseline_model(X_train_scaled.shape[1], BASE_LEARNING_RATE)
+model.summary()
+
+
+# Build and Train Model 1
+dl_model_baseline = build_baseline_model(INPUT_SHAPE, BASE_LEARNING_RATE)
+print("training deep learning baseline mdel ")
+history_baseline = dl_model_baseline.fit(
+    X_train_scaled, y_train,
+    epochs=EPOCHS,
+    batch_size=BATCH_SIZE,
+    validation_data=(X_val_scaled, y_val),
+    callbacks=[early_stopping, reduce_lr],
+    verbose=1
+)
+
+
+
+
+
+    )
+    return model
